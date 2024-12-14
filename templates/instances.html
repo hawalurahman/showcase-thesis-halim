@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+{{ super() }}
+<style type="text/css">
+    .important {
+        color: #336699;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if data %}
+{% if source == 'squad' %}
+{% set context = data['context'] %}
+{% set index = data['idx'] %}
+{% set answer = data['answer'] %}
+{% set reference = data['ref'] %}
+{% set baseline = data['fuadi'] %}
+{% set scenario1 = data['idtbase v1'] %}
+{% set scenario2 = data['idtbase v2'] %}
+{% set score = data['score'] %}
+{% set proposed1 = "Skenario 1" %}
+{% set proposed2 = "Skenario 2" %}
+{% set hl_row = data['hl_row'] %}
+
+
+{% elif source == 'tydiqa' %}
+{% set context = data['context'] %}
+{% set index = data['idx'] %}
+{% set answer = data['answer'] %}
+{% set reference = data['reference'] %}
+{% set baseline = data['baseline'] %}
+{% set scenario1 = data['v1'] %}
+{% set scenario2 = data['v2'] %}
+{% set score = data['score'] %}
+{% set proposed1 = "Skenario 3" %}
+{% set proposed2 = "Skenario 4" %}
+{% set hl_row = data['hl_row'] %}
+
+{% endif %}
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h3>Hasil inference pada: {{ source }}</h3>
+            <p>Anda saat ini membaca index: {{ index }}</p>
+        </div>
+        <div class="col-sm-4">
+            <form action="{{ url_for('redirect_to_instance', source=source) }}" method="POST">
+                <div class="input-group mb-3">
+                    <label for="new_index" class="visually-hidden">Enter Index</label>
+                    <input type="number" id="new_index" class="form-control" placeholder="Index" aria-label="Index"
+                        aria-describedby="submit-button" name="new_index" required min="1">
+                    <button class="btn btn-outline-secondary" type="submit" id="submit-button">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="table-responsive mt-3">
+    <table class="table table-bordered">
+        <tr>
+            <th scope="row" class="text-wrap w-25">Context</th>
+            <td class="align-top" colspan="2">{{ context | safe }}</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-wrap w-20">Target Jawaban</th>
+            <td class="align-top" colspan="2">{{ answer }}</td>
+        </tr>
+        <tr>
+            <th scope="row" class="text-wrap w-10">Referensi</th>
+            <td class="align-top" colspan="2">{{ reference }}</td>
+        </tr>
+        <tr class="{{ hl_row[0] }}">
+            <th scope="row" class="text-wrap w-10">Baseline</th>
+            <td class="align-top">{{ baseline }}</td>
+            <td class="align-top">{{ score[0] }}</td>
+        </tr>
+        <tr class="{{ hl_row[1] }}">
+            <th scope="row" class="text-wrap w-10">{{ proposed1 }}</th>
+            <td class="align-top">{{ scenario1 }}</td>
+            <td class="align-top">{{ score[1] }}</td>
+        </tr>
+        <tr class="{{ hl_row[2] }}">
+            <th scope="row" class="text-wrap w-10">{{ proposed2 }}</th>
+            <td class="align-top">{{ scenario2 }}</td>
+            <td class="align-top">{{ score[2] }}</td>
+        </tr>
+    </table>
+</div>
+
+<div class="container text-center mb-5 py-5 position-absolute bottom-0">
+    <div class="row">
+        <div class="col-sm">
+            {% if index != 0 %}
+            <a class="btn btn-secondary" href="/{{ source }}/{{ index-1 }}">&#xab; Previous</a>
+            {% endif %}
+        </div>
+        <div class="col-sm">
+            <a class="btn btn-danger" href="/">Home</a>
+        </div>
+        <div class="col-sm">
+            <a class="btn btn-primary" href="/{{ source }}/{{ index+1 }}">Next &#xbb;</a>
+        </div>
+      </div>
+</div>
+
+
+{% endif %}
+
+
+
+{% endblock %}

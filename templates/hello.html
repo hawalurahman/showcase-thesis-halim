@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+  .important {
+    color: #336699;
+  }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container text-center mb-5">
+  <div class="row">
+    <h1>Skema Fine-Tuning</h1>
+    <p>Berikut adalah skema fine-tuning yang dilakukan dalam penelitian</p>
+  </div>
+  <div class="row mt-3">
+    <div class="col-5">
+      <img src="assets/rancangan_usulan.png" class="w-75 h-auto" alt="rancangan_usulan">
+    </div>
+    <div class="col">
+      <table class="table table-bordered table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Dataset</th>
+            <th scope="col">Answer Extraction</th>
+            <th scope="col">Question Generation</th>
+            <th scope="col">Fine-tuned model</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Skenario 1</th>
+            <td>SQuAD</td>
+            <td>Prefix Paragraph</td>
+            <td>Prefix-Prepend Paragraph</td>
+            <td><a href="https://huggingface.co/hawalurahman/idt5-base-qaqg" class="btn btn-primary btn-sm">huggingface</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Skenario 2</th>
+            <td>SQuAD</td>
+            <td>Prefix Sentence</td>
+            <td>Prefix-Prepend Paragraph</td>
+            <td><a href="https://huggingface.co/hawalurahman/idt5-base-qaqg_v2" class="btn btn-primary btn-sm">huggingface</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Skenario 1</th>
+            <td>TyDiQA</td>
+            <td>Prefix Paragraph</td>
+            <td>Prefix-Prepend Paragraph</td>
+            <td><a href="https://huggingface.co/hawalurahman/idt5-base-qaqg-TydiQA-v1" class="btn btn-primary btn-sm">huggingface</a></td>
+          </tr>
+          <tr>
+            <th scope="row">Skenario 2</th>
+            <td>TyDiQA</td>
+            <td>Prefix Sentence</td>
+            <td>Prefix-Prepend Paragraph</td>
+            <td><a href="https://huggingface.co/hawalurahman/idt5-base-qa-qg-TydiQA-id-v2" class="btn btn-primary btn-sm">huggingface</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center mb-5">
+  <div class="row">
+    <h1>Hasil Inference</h1>
+    <p>Berikut adalah performa model pada masing-masing dataset.</p>
+  </div>
+  <div class="row mt-3">
+    <div class="col">
+      <h5 class="mb-3">Performa pada dataset SQuAD</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">BLEU-1</th>
+            <th scope="col">BLEU-2</th>
+            <th scope="col">BLEU-3</th>
+            <th scope="col">BLEU-4</th>
+            <th scope="col">ROUGE-L</th>
+            <th scope="col">BERT-sim</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Baseline</th>
+            <td>37,72</td>
+            <td>15,18</td>
+            <td>8,29</td>
+            <td>5,06</td>
+            <td>39,27</td>
+            <td>0,659</td>
+          </tr>
+          <tr class="table-primary">
+            <th scope="row">Skenario 1</th>
+            <td>46,94</td>
+            <td>20,44</td>
+            <td>11,26</td>
+            <td>6,94</td>
+            <td>44,11</td>
+            <td>0,694</td>
+          </tr>
+          <tr>
+            <th scope="row">Skenario 2</th>
+            <td>46,09</td>
+            <td>20,26</td>
+            <td>11,19</td>
+            <td>6,87</td>
+            <td>44,05</td>
+            <td>0,698</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="/squad/0" class="btn btn-primary">Lihat hasil inference</a>
+    </div>
+    <div class="col">
+      <h5 class="mb-3">Performa pada dataset TyDiQA</h5>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Model</th>
+            <th scope="col">BLEU-1</th>
+            <th scope="col">BLEU-2</th>
+            <th scope="col">BLEU-3</th>
+            <th scope="col">BLEU-4</th>
+            <th scope="col">ROUGE-L</th>
+            <th scope="col">BERT-sim</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Baseline</th>
+            <td>45,74</td>
+            <td>20,26</td>
+            <td>12,33</td>
+            <td>8,37</td>
+            <td>39,96</td>
+            <td>0,612</td>
+          </tr>
+          <tr class="table-primary">
+            <th scope="row">Skenario 3</th>
+            <td>58,44</td>
+            <td>33,86</td>
+            <td>22,86</td>
+            <td>16,44</td>
+            <td>57,38</td>
+            <td>0,789</td>
+          </tr>
+          <tr>
+            <th scope="row">Skenario 4</th>
+            <td>58,21</td>
+            <td>32,91</td>
+            <td>21,87</td>
+            <td>15,88</td>
+            <td>57,00</td>
+            <td>0,785</td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="/tydiqa/0" class="btn btn-primary">Lihat hasil inference</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
